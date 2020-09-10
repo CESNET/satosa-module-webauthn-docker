@@ -1,0 +1,31 @@
+#EXAMPLE OF THE CONFIG FILE
+#parameters of the database that you intend to use
+mysql:
+  user: webauthn
+  password: password
+  host: db
+  database: webauthn
+
+#details of the calling site
+caller:
+  #url to which the user is redirected after successful authentication
+  callback-url: example.cz/webauthn/process
+  #public key to verify signatures of the calling site
+  public-key: /var/webauthn-module/py_webauthn/app/public_key.pem
+
+#module details
+host:
+  #the url that the module runs under
+  origin: https://example.cz
+  #id of the relying party
+  rp-id: example.cz
+  #whether it is permitted to turn off the authentication for the purpose of registering tokens on a different device
+  turn-off: True
+  #the time until the authentication requiring is turned on again
+  turn-off-timeout-seconds: 300
+
+#responses that are sent back to the calling party according to the result of the authentication
+responses:
+  success: okay
+  failure: nok
+  invalid-request: invalid

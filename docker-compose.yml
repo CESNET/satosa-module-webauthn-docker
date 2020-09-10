@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_USER: webauthn
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: webauthn
+    
+
+  webauthn:
+    image: webauthn:latest
+    restart: always
+    volumes: 
+      - /home/ernst/Desktop/docker/config.yaml:/var/webauthn-module/py_webauthn/app/config.yaml
+      - /home/ernst/Desktop/docker/public_key.pem:/var/webauthn-module/py_webauthn/app/public_key.pem
+    depends_on:
+      - "db"
+    ports:
+      - 80:80
